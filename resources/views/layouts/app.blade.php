@@ -26,7 +26,7 @@ The above copyright notice and this permission notice shall be included in all c
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css')}}">
   <!-- CSS Files -->
-  <link href="{{asset('assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+  <link href="{{asset('assets/css/material-dashboard.css')}}" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="{{asset('assets/demo/demo.css')}}" rel="stylesheet" />
 </head>
@@ -728,7 +728,7 @@ The above copyright notice and this permission notice shall be included in all c
   <!--  Notifications Plugin    -->
   <script src="{{asset('assets/js/plugins/bootstrap-notify.js')}}"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="{{asset('assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
+  <script src="{{asset('assets/js/material-dashboard.js')}}" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="{{asset('assets/demo/demo.js')}}"></script>
   <script>
