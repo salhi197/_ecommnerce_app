@@ -38,13 +38,10 @@ class CommandeController extends Controller
      */
     public function create()
     {
-        $livreurs =Livreur::all();
         $communes = Commune::all();
         $wilayas =Wilaya::all();
-        $produits = Produit::all();
-        $types = Type::all();
-        
-        return view('commandes.create',compact('wilayas','communes','produits','livreurs','types'));
+        $produits = Produit::all();        
+        return view('commandes.create',compact('wilayas','communes','produits'));
     }
 
     public function search(Request $request)

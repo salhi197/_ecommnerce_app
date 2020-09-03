@@ -48,3 +48,14 @@ Route::group(['prefix' => 'commande', 'as' => 'commande'], function () {
     Route::post('/change/state', ['as' => '.update.state', 'uses' => 'CommandeController@updateState']);
     
 });
+
+Route::group(['prefix' => 'type', 'as' => 'type'], function () {
+    Route::get('/', ['as' => '.index', 'uses' => 'TypeController@index']);
+    Route::get('/show/create',['as'=>'.show.create', 'uses' => 'TypeController@create']);
+    Route::post('/create', ['as' => '.create', 'uses' => 'TypeController@store']);
+    Route::post('/create/ajax', ['as' => '.store.ajax', 'uses' => 'TypeController@storeAjax']);
+    Route::get('/destroy/{id_type}', ['as' => '.destroy', 'uses' => 'TypeController@destroy']);    
+    Route::get('/edit/{id_type}', ['as' => '.edit', 'uses' => 'TypeController@edit']);
+    Route::get('/show/{id_type}', ['as' => '.show', 'uses' => 'TypeController@show']);
+    Route::post('/update/{id_type}', ['as' => '.update', 'uses' => 'TypeController@update']);    
+});
