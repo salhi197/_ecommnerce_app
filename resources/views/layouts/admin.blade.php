@@ -24,7 +24,7 @@ The above copyright notice and this permission notice shall be included in all c
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css')}}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <style>
     body{
       text-transform: capitalize;
@@ -36,7 +36,10 @@ The above copyright notice and this permission notice shall be included in all c
   <link href="{{asset('assets/css/material-dashboard.css')}}" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="{{asset('assets/demo/demo.css')}}" rel="stylesheet" />
+  <link href="{{asset('css/toastr.css')}}" rel="stylesheet" />
+
 </head>
+
 
 <body class="">
   <div class="wrapper ">
@@ -51,37 +54,45 @@ The above copyright notice and this permission notice shall be included in all c
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active  ">
+          <li class="nav-item  {{ (Request::is('home') ? 'active' : '') }}">
             <a class="nav-link" href="./dashboard.html">
               <i class="material-icons">dashboard</i>
               <p>Tableau de Bord</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item  {{ (Request::is('produit') || Request::is('produit/*') ? 'active' : '') }}">
             <a class="nav-link" href="{{route('produit.index')}}">
               <i class="material-icons">person</i>
               <p>Produits</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item  {{ (Request::is('commande') || Request::is('commande/*') ? 'active' : '') }}">
             <a class="nav-link" href="{{route('commande.index')}}">
               <i class="material-icons">content_paste</i>
               <p>Commandes</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item  {{ (Request::is('stock') || Request::is('stock/*') ? 'active' : '') }}">
           <a class="nav-link" href="{{route('produit.stock')}}">
               <i class="material-icons">library_books</i>
               <p>Stock</p>
             </a>
           </li>
-          <li class="nav-item ">
-          <a class="nav-link" href="{{route('produit.stock')}}">
+          <li class="nav-item  {{ (Request::is('livreur') || Request::is('livreur/*') ? 'active' : '') }}">
+          <a class="nav-link" href="{{route('livreur.index')}}">
               <i class="material-icons">account_box</i>
               <p>livreurs</p>
             </a>
           </li>
-         
+
+          <li class="nav-item  {{ (Request::is('type') || Request::is('type/*') ? 'active' : '') }}">
+            <a class="nav-link" href="{{route('type.index')}}">
+              <i class="material-icons">account_box</i>
+              <p>types</p>
+            </a>
+          </li>
+
+
           <li class="nav-item ">
               <a class="nav-link" href="{{ route('logout') }}" 
                 onclick="event.preventDefault();document.getElementById('logout-form').submit();">
@@ -218,36 +229,12 @@ The above copyright notice and this permission notice shall be included in all c
       </div>
       <footer class="footer">
         <div class="container-fluid">
-          <nav class="float-left">
-            <ul>
-              <li>
-                <a href="https://www.creative-tim.com">
-                  Creative Tim
-                </a>
-              </li>
-              <li>
-                <a href="https://creative-tim.com/presentation">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="http://blog.creative-tim.com">
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a href="https://www.creative-tim.com/license">
-                  Licenses
-                </a>
-              </li>
-            </ul>
-          </nav>
           <div class="copyright float-right">
             &copy;
             <script>
               document.write(new Date().getFullYear())
             </script>, made with <i class="material-icons">favorite</i> by
-            <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+            <a href="#" target="_blank">Dzair-soft</a> for a better web.
           </div>
         </div>
       </footer>
@@ -351,11 +338,10 @@ The above copyright notice and this permission notice shall be included in all c
   <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
   <script src="{{asset('assets/js/plugins/nouislider.min.js')}}"></script>
   <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
   <!-- Library for adding dinamically elements -->
   <script src="{{asset('assets/js/plugins/arrive.min.js')}}"></script>
   <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chartist JS -->
   <script src="{{asset('assets/js/plugins/chartist.min.js')}}"></script>
   <!--  Notifications Plugin    -->
@@ -364,6 +350,33 @@ The above copyright notice and this permission notice shall be included in all c
   <script src="{{asset('assets/js/material-dashboard.js')}}" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="{{asset('assets/demo/demo.js')}}"></script>
+  <script src="{{asset('js/toastr.min.js')}}"></script>
+
+  <script>
+  @if(session('success'))
+      $(function(){
+          toastr.success('{{Session::get("success")}}')
+      })
+  @endif
+
+  @if ($errors->any())
+      $(function(){
+        @foreach ($errors->all() as $error)
+                  toastr.error('{{$error}}')
+        @endforeach
+      })
+  @endif
+  @if(session('error'))
+    $(function(){
+        toastr.error('{{Session::get("error")}}')
+    })
+  @endif
+</script>
+
+        @yield('scripts')
+
+
+
   <script>
     $(document).ready(function() {
       $().ready(function() {

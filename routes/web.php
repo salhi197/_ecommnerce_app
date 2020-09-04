@@ -59,3 +59,16 @@ Route::group(['prefix' => 'type', 'as' => 'type'], function () {
     Route::get('/show/{id_type}', ['as' => '.show', 'uses' => 'TypeController@show']);
     Route::post('/update/{id_type}', ['as' => '.update', 'uses' => 'TypeController@update']);    
 });
+
+Route::group(['prefix' => 'livreur', 'as' => 'livreur'], function () {
+    Route::get('/', ['as' => '.index', 'uses' => 'LivreurController@index']);
+    Route::get('/show/create',['as'=>'.show.create', 'uses' => 'LivreurController@create']);
+    Route::post('/create', ['as' => '.create', 'uses' => 'LivreurController@store']);
+    Route::get('/destroy/{id_livruer}', ['as' => '.destroy', 'uses' => 'LivreurController@destroy']);    
+    Route::get('/change/state/{id_livruer}', ['as' => '.change.state', 'uses' => 'LivreurController@changeState']);
+    Route::get('/show/{id_livruer}', ['as' => '.show', 'uses' => 'LivreurController@show']);
+    Route::post('/update/{id_livruer}', ['as' => '.update', 'uses' => 'LivreurController@update']);    
+    Route::get('/livraisons', ['as' => '.livraisons', 'uses' => 'LivreurController@maList']);    
+    Route::get('/index/ajax', ['as' => '.ajax', 'uses' => 'LivreurController@indexAjax']);
+
+});

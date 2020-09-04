@@ -29,21 +29,10 @@ class LivreurController extends Controller
 
     public function index()
     {
-        if(Auth::guard('livreur')->user()){
-            $livreur = Auth::guard('livreur')->user();
-            //$livreurs = Livreur::all();
-            $commandes = Commande::where(['state'=>'en attente','livreur'=>null])->get();       
-            return view('livreurs.my-index',compact('commandes'));            
-            }
-            if(Auth::guard('admin')->user()){
-                $communes = Commune::all();
-                $wilayas = Wilaya::all();
-                $livreurs = Livreur::all();
-                return view('livreurs.index',compact('livreurs','communes','wilayas'));
-        
-            }
-            return redirect()->route('login');//->with('success', 'pub changé avec succés ');                   
-
+        $communes = Commune::all();
+        $wilayas = Wilaya::all();
+        $livreurs = Livreur::all();
+        return view('livreurs.index',compact('livreurs','communes','wilayas'));
     }
 
     /**
@@ -69,26 +58,16 @@ class LivreurController extends Controller
         }
 
 }
-    public function store(StoreLivreur $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
         $livreur = new Livreur();
         $livreur->name= $request->get('nom');
         $livreur->prenom= $request->get('prenom');
         $livreur->email= $request->get('email');
         $livreur->telephone= $request->get('telephone');
         $livreur->adress= $request->get('adress');
-        $livreur->birth= $request->get('birth');
-        $livreur->password=Hash::make($request->get('password'));
-        $livreur->password_text= $request->get('password');
         $livreur->wilaya_id = $request->get('wilaya_id');
         $livreur->commune_id = $request->get('commune_id');
-        if ($request->hasFile('identite')) {
-            $livreur->identite = $request->file('identite')->store(
-                'livreurs/identite',
-                'public'
-            );
-        }
 
         $livreur->save();
         return redirect()->route('livreur.index')->with('success', 'livreur inséré avec succés ');

@@ -26,9 +26,9 @@ class TypeController extends Controller
             parse_str($array, $data);        
             $type = new Type([
                 'label' => $data['type'],
-                'temps' => $data['temps'],
-                'commission' => $data['commission'],
-                'prix' => $data['prix'],
+                'temps' => 'temps',
+                'commission' => 'commission',
+                'prix' => 'prix',
             ]);
             $type->save();    
             $response = array(

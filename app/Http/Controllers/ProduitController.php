@@ -35,21 +35,15 @@ class ProduitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProduit $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
         $produit = new Produit();
         $produit->nom= $request->get('nom');
         $produit->prix_vente= $request->get('prix_vente');
         $produit->quantite= $request->get('quantite');
         $produit->categorie= $request->get('categorie');
-        $produit->prix_fournisseur= $request->get('prix_fournisseur');
-        $produit->prix_livraison= $request->get('prix_livraison');
+        $produit->prix_achat= $request->get('prix_achat');
         $produit->description = $request->get('description');
-        $produit->fournisseur = $request->get('fournisseur');
-        $produit->budget = $request->get('budget');
-        $produit->prix_freelance = $request->get('prix_freelance');
-        $produit->prix_clicntic = $request->get('prix_clicntic');
         $stack = array();
         if(request('image')){
             foreach($request->file('image') as $image){
@@ -59,10 +53,9 @@ class ProduitController extends Controller
                 );
                 array_push($stack,$image);
             }    
+            $stack = json_encode($stack);
+            $produit->image = $stack;     
         }
-
-        $stack = json_encode($stack);
-        $produit->image = $stack; 
         $produit->save();
         return redirect()->route('produit.index')->with('success', 'Produit inséré avec succés ');        
     }
@@ -99,15 +92,14 @@ class ProduitController extends Controller
      * @param  \App\Produit  $produit
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreProduit $request, Produit $produit)
+    public function update(Request $request, Produit $produit)
     {
         $produit = Produit::find($request['id']);
         $produit->nom= $request->get('nom');
         $produit->prix_vente= $request->get('prix_vente');
         $produit->quantite= $request->get('quantite');
         $produit->categorie= $request->get('categorie');
-        $produit->prix_fournisseur= $request->get('prix_fournisseur');
-        $produit->prix_livraison= $request->get('prix_livraison');
+        $produit->prix_achat= $request->get('prix_achat');
         $produit->description = $request->get('description');
 
         if ($request->hasFile('image')) {

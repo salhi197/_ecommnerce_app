@@ -34,105 +34,31 @@
 
                                                 </div>
 
-                                                <div class="col-md-4">
+<div class="col-md-4">
+    <div class="form-group">
+        <label class="small mb-1">catégorie de produit :</label>
+        <select class="form-control" name="categorie" id="categories">
+            <option value="general" selected>elctrotechnique</option>                    
+            <option value="general" selected>electoménager</option>                    
+            <option value="general" selected>téléphonie  & accesssoires</option>                    
+            <option value="general" selected>Maison & Bureau </option>                    
+            <option value="general" selected>Santé & Beauté</option>                    
+            <option value="general" selected>Articles & sport</option>                    
+            <option value="general" selected>Jouets & Jeux</option>                    
+            <option value="general" selected>Formations</option>                    
+        </select>
+    </div>
+</div>
 
-                                                    <div class="form-group">
-
-                                                        <label class="small mb-1">catégorie de produit :</label>
-
-                                                        <select class="form-control" name="categorie" id="categories">
-
-                                                        <option value="general" selected>
-
-                                                                    elctrotechnique
-
-                                                                </option>                    
-
-                                                                <option value="general" selected>
-
-                                                                    electoménager
-
-                                                                </option>                    
-
-                                                                <option value="general" selected>
-
-                                                                    téléphonie  & accesssoires
-
-                                                                </option>                    
-
-                                                                <option value="general" selected>
-
-                                                                    Maison & Bureau 
-
-                                                                </option>                    
-
-                                                                <option value="general" selected>
-
-                                                                    Santé & Beauté
-
-                                                                </option>                    
-
-                                                                <option value="general" selected>
-
-                                                                    Articles & sport
-
-                                                                </option>                    
-
-                                                                
-
-                                                                <option value="general" selected>
-
-                                                                    Jouets & Jeux
-
-                                                                </option>                    
-
-                                                                <option value="general" selected>
-
-                                                                    Formations
-
-                                                                </option>                    
-
-                                                        </select>
-
-                                                    <a style="cursor:pointer;" data-toggle="modal" data-target="#exampleModal">
-
-                                                    ajouter catégorie
-
-                                                    </a>
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="col-md-4">
-
-                                                    <div class="form-group">
-
-                                                        <label class="small mb-1">choisir fournisseur :</label>
-
-                                                        <select class="form-control" name="fournisseur" id="fournisseurs">
-
-                                                      
-
-                                                        </select>
-
-                                                        <a type="button" class="" data-toggle="modal" data-target="#example">
-
-                                                           ajouter fournisseur
-
-                                                        </a>
-
-
-
-                                                    </div>
-
-                                                </div>
 
 
 
                                             </div>
 
                                             <div class="form-row">
+
+
+
 
                                             <div class="col-md-3">
 
@@ -164,68 +90,14 @@
 
                                                         <label class="small mb-1" for="inputConfirmPassword">prix d'achet ( fournisseur )  : </label>
 
-                                                        <input  class="form-control py-4" value="{{ old('prix_fournisseur') }}" name="prix_fournisseur" type="text" placeholder="" />
+                                                        <input  class="form-control py-4" value="{{ old('prix_achat') }}" name="prix_achat" type="text" placeholder="" />
 
                                                     </div>
 
                                                 </div>
 
-                                                <div class="col-md-3">
-
-                                                    <div class="form-group">
-
-                                                        <label class="small mb-1" for="inputConfirmPassword">budget   : </label>
-
-                                                        <input  class="form-control py-4" value="{{ old('budget') }}" name="budget" type="text" placeholder="" />
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="col-md-3">
-
-                                                    <div class="form-group">
-
-                                                        <label class="small mb-1" for="inputConfirmPassword">prix livraison : </label>
-
-                                                        <input  class="form-control py-4" value="{{ old('prix_livraison') }}" name="prix_livraison" type="text" 
-
-                                                        placeholder="" />
-
-                                                    </div>
-
-                                                </div>
 
                                                 
-
-                                                <div class="col-md-3">
-
-                                                    <div class="form-group">
-
-                                                        <label class="small mb-1" for="inputConfirmPassword">prix freelance : </label>
-
-                                                        <input  class="form-control py-4" value="{{ old('prix_freelance') }}" name="prix_freelance" type="text" 
-
-                                                        placeholder="" />
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="col-md-3">
-
-                                                    <div class="form-group">
-
-                                                        <label class="small mb-1" for="inputConfirmPassword">prix clicntic : </label>
-
-                                                        <input  class="form-control py-4" value="{{ old('prix_clicntic') }}" name="prix_clicntic" type="text" 
-
-                                                        placeholder="" />
-
-                                                    </div>
-
-                                                </div>
-
                                             </div>
 
                                             <div class="form-row">
@@ -422,8 +294,4 @@
 
 
 
-@section('scripts')
-
-
-@endsection
 

@@ -25,20 +25,11 @@
                                                 <th>Nom produit </th>
 
                                                 <th>catégorie </th>
+                                                <th>quantite </th>
 
                                                 <th>prix vente </th>
 
                                                 <th>prix achat </th>
-
-                                                <th>marge bénéficiale</th>
-
-                                                <th>Charge</th>
-
-                                                <th>qunatité-stock</th>
-
-                                                <th>prix clicNtic</th>
-
-                                                <th>prix freelance</th>
 
                                                 <th>actions</th>
 
@@ -60,21 +51,10 @@
 
                                                 <td>{{$produit->categorie ?? ''}}</td>
 
+                                                <td>{{$produit->quantite ?? ''}}</td>
                                                 <td>{{$produit->prix_vente ?? ''}}</td>
 
-                                                <td>{{$produit->prix_fournisseur ?? ''}}</td>
-
-                                                <td>{{$produit->prix_vente-$produit->prix_fournisseur}}</td>
-
-                                                <td>{{$produit->budget ?? ''}}</td>
-
-
-
-                                                <td>{{$produit->quantite ?? ''}}</td>
-
-                                                <td>{{$produit->prix_freelance ?? ''}}</td>
-
-                                                <td>{{$produit->prix_clicntic ?? ''}}</td>
+                                                <td>{{$produit->prix_achat ?? ''}}</td>
 
                                                 <td >
 
@@ -87,8 +67,7 @@
                                                     onclick="return confirm('etes vous sure  ?')"
 
                                                     class="text-white btn btn-danger">
-
-                                                            <i class="fas fa-trash"></i> Supprimer 
+ Supprimer 
 
                                                     </a>
 
@@ -97,8 +76,7 @@
                                                     href="{{route('produit.edit',['id_produit'=>$produit->id])}}"
 
                                                      class="text-white btn btn-info">
-
-                                                            <i class="fas fa-edit"></i> Modifer 
+ Modifer 
 
                                                     </a>
 
@@ -107,8 +85,7 @@
                                                     href="{{route('produit.show',['id_produit'=>$produit->id])}}"
 
                                                      class="text-white btn btn-primary">
-
-                                                            <i class="fas fa-eye"></i> Consulter 
+ Consulter 
 
                                                     </a>
 

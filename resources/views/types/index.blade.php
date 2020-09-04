@@ -21,19 +21,17 @@
 
                             </div>
 
-                            <div class="card-body">
 
-                                <div class="table-responsive">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class=" text-primary">
 
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-
-                                        <thead>
 
                                             <tr>
 
                                                 <th>ID type</th>
                                                 <th>label</th>
-                                                <th>prix / commission /temps</th>
                                                 <th>actions</th>
 
                                             </tr>
@@ -51,7 +49,6 @@
                                                     <td>{{$type->id ?? ''}}</td>
 
                                                     <td>{{$type->label ?? ''}}</td>
-                                                    <td>{{$type->prix ?? ''}} - {{$type->commission ?? ''}} - {{$type->temps ?? ''}}</td>
 
                                                     <td >
 
@@ -130,20 +127,7 @@
                     <div class="form-group">
                         <label class="small mb-1" for="inputFirstName">type: </label>
                         <input type="text" name="type"  class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="small mb-1" for="inputFirstName">temps de livraison: </label>
-                        <input type="text" name="temps"  class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="small mb-1" for="inputFirstName">prix : </label>
-                        <input type="text" name="prix" class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                        <label class="small mb-1" for="inputFirstName">Commission: </label>
-                        <input type="text" name="commission" class="form-control"/>
-                    </div>
-    
+                    </div>    
             <button class="btn btn-primary btn-block" type="button" id="ajax_type">ajouter type</button>
 
         </form>

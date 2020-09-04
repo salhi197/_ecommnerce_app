@@ -10,9 +10,11 @@ class Produit extends Model
         'nom',
         'catégorie',
         'quantite',
-        'prix' ,   
-        'budget',
+        'prix_achat',   
+        'prix_vente',   
         'description'    
     ];
 
 }
+
+

@@ -30,7 +30,7 @@ class Commande extends Model
         'commune',
         'note',
         'state',
-        'livreur','
-        remise'      
+        'livreur_id',
+        'livreur','remise'      
     ];
 }

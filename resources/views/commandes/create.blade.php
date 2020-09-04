@@ -54,7 +54,7 @@
 
                                                 <div class="col-md-4">
                                                         <div class="form-group">    
-                                                            <label class="small mb-1" for="temp">Temps de livraison: </label>
+                                                            <label class="small mb-1" for="temp">Temps de livraison (en jours): </label>
                                                             <input  class="form-control py-4" id="temps" value="{{$comamnde->temp ?? ''}}" name="temp" type="text" placeholder="temps de livraison " />
                                                         </div>
                                                 </div>
@@ -136,13 +136,10 @@
                                                         <div class="form-group">
                                                         <label class="small mb-1">choisir livreur:</label>
                                                         <select class="form-control" name="livreur" id="livreurs">
-                                                        <option value="">
-                                                            ------------------------------
-                                                        </option>                    
 
                                                         @foreach($livreurs as $livreur)
                                                                 <option value="{{$livreur}}" >
-                                                                {{$livreur->nom}} {{$livreur->prenom}}
+                                                                {{$livreur->name}} {{$livreur->prenom}}
                                                                 </option>                    
                                                         @endforeach
                                                         </select>
@@ -192,7 +189,7 @@
                                                                 </strong>
                                                                                                                                 
                                                              </p>
-                                                        <a href="#" class="btn btn-primary">Total <strong id="total"> 1800 </strong> DA </a>
+                                                        <a href="#" class="btn btn-primary">Total <strong id="total">  </strong> DA </a>
                                                     </div>
                                                     </div>
                                                 </div>
@@ -277,6 +274,7 @@ function watchWilayaChanges() {
                     });
             });
         }
+
 function onChangeProduit()
 {
     $('.produits').on('change', function (e) {
@@ -293,11 +291,11 @@ function onChangeProduit()
             })            
         }
         $('#quantite').attr('min',0)        
-        $('#prix').val(obj.prix_vente)        
-        
+        $('#prix').val(obj.prix_vente)                
     });
 
 }
+
 function onChangeQte()
 {
     $('#quantite').on('keyup', function (e) {
@@ -338,18 +336,16 @@ function onTypeLivraison()
             watchWilayaChanges();
             onChangeProduit();
             onChangeQte();
-            onTypeLivraison();
             onChangeLivraison();
         });
 
 </script>
 <script>
-$(document).ready(function(){
     $('#reload').click(function(){
         console.log('test')
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
-            url: '{{route("livreur.index.ajax")}}',
+            url: '{{route("livreur.ajax")}}',
             type: 'POST',
             dataType: 'JSON',
             success: function (data) { 
@@ -368,7 +364,7 @@ $(document).ready(function(){
     });
 
 
-    })
+
 
     $("#ajax_type").click(function(){
         var data  = $('#form_type').serialize()
@@ -395,8 +391,7 @@ $(document).ready(function(){
                 })
             }
         }); 
-    });
-});    
+    }); 
 
 
 

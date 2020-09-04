@@ -41,7 +41,10 @@ class CommandeController extends Controller
         $communes = Commune::all();
         $wilayas =Wilaya::all();
         $produits = Produit::all();        
-        return view('commandes.create',compact('wilayas','communes','produits'));
+        $types = Type::all();        
+        $livreurs = Livreur::all();        
+
+        return view('commandes.create',compact('wilayas','communes','produits','types','livreurs'));
     }
 
     public function search(Request $request)
@@ -72,23 +75,33 @@ class CommandeController extends Controller
     public function store(Request $request)
     {
         $data = json_decode($request->get('produit'), true);
+        $livreur = json_decode($request->get('livreur'), true);
+        $id_livreur = $livreur['id'];
+        $produit = Produit::find($data["id"]);
+        $qteOld = $produit->quantite;
+        $qteNew = $qteOld - $request->get('quantite');  
         $commande = new Commande([
             'produit'=>$request->get('produit'),
             'quantite'=>$request->get('quantite'),
             'prix'=>$request->get('prix'),
             'prix_livraison'=>$request->get('prix_livraison'),
-            'command_express'=>$request->get('comand_express'),
+            'command_express'=>$request->get('comand_express'),//type de livraison
             'nom_client'=>$request->get('nom_client'),
             'telephone'=>$request->get('telephone'),
-            'wilaya'=>$request->get('wilaya'),
-            'commune'=>$request->get('commune'),
+            'wilaya'=>$request->get('wilaya_id'),
+            'commune'=>$request->get('commune_id'),
             'note'=>$request->get('note'),
             'adress'=>$request->get('adress') ?? '',
             'state'=>'en attente',
-            'livreur'=>$request->get('livreur'),
-            'remise'=>$request->get('remise'),
-            
+            'livreur'=>$request->get('livreur'),            
+            'livreur_id'=>$id_livreur,            
         ]);
+
+            /*
+            * modifer la qte
+            */
+        $produit->quantite = $qteNew;
+        $produit->save();
         $stack = array();
         if(request('images')){
             foreach($request->file('images') as $image){
@@ -98,9 +111,9 @@ class CommandeController extends Controller
                 );
                 array_push($stack,$image);
             }    
+            $stack = json_encode($stack);
+            $commande->images = $stack;     
         }
-        $stack = json_encode($stack);
-        $commande->images = $stack; 
         $commande->save();
         return redirect()->route('commande.index')->with('success', 'commande inséré avec succés inserted successfuly ');
 

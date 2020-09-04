@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  ven. 04 sep. 2020 à 00:42
+-- Généré le :  ven. 04 sep. 2020 à 12:43
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.3.11
 
@@ -34,7 +34,7 @@ CREATE TABLE `commandes` (
   `produit` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `quantite` int(11) DEFAULT NULL,
   `prix` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `command_express` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `command_express` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `nom_client` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `telephone` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `wilaya` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -46,8 +46,22 @@ CREATE TABLE `commandes` (
   `images` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
-  `prix_livraison` bigint(20) DEFAULT NULL
+  `prix_livraison` int(11) DEFAULT NULL,
+  `en_attente` timestamp NULL DEFAULT NULL,
+  `accepte` timestamp NULL DEFAULT NULL,
+  `expedier` timestamp NULL DEFAULT NULL,
+  `en_attente_paiement` timestamp NULL DEFAULT NULL,
+  `livree` timestamp NULL DEFAULT NULL,
+  `motif` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `commandes`
+--
+
+INSERT INTO `commandes` (`id`, `livreur_id`, `produit`, `quantite`, `prix`, `command_express`, `nom_client`, `telephone`, `wilaya`, `commune`, `state`, `adress`, `note`, `livreur`, `images`, `created_at`, `updated_at`, `prix_livraison`, `en_attente`, `accepte`, `expedier`, `en_attente_paiement`, `livree`, `motif`) VALUES
+(16, NULL, '{\"id\":8,\"nom\":\"loup garous\",\"categorie\":\"general\",\"quantite\":28,\"description\":null,\"created_at\":\"2020-09-03 23:27:02\",\"updated_at\":\"2020-09-04 10:05:49\",\"prix_vente\":1800,\"prix_achat\":900}', 2, '1800', 'Express 24h', 'haider ali salhi', '+213794498727', '15', '551', 'en attente paiement', 'cem', NULL, '{\"id\":5,\"name\":\"ali\",\"prenom\":\"ali\",\"email\":\"ali@gmail.com\",\"is_editor\":0,\"adress\":\"cem mohamed lamine lamoudi belfort el-harrach\",\"telephone\":\"0551515151\",\"birth\":\"2016-08-28\",\"password_text\":\"aliali\",\"wilaya_id\":5,\"commune_id\":158,\"created_at\":\"2020-07-17 16:07:30\",\"updated_at\":\"2020-07-17 16:07:30\",\"identite\":\"empty\",\"state\":1}', NULL, '2020-09-04 09:16:23', '2020-09-04 09:16:36', 800, NULL, NULL, NULL, '2020-09-04 09:16:36', NULL, NULL),
+(17, 5, '{\"id\":8,\"nom\":\"loup garous\",\"categorie\":\"general\",\"quantite\":26,\"description\":null,\"created_at\":\"2020-09-03 23:27:02\",\"updated_at\":\"2020-09-04 10:16:23\",\"prix_vente\":1800,\"prix_achat\":900}', 11, '1800', 'livraison à domicile (3jours)', 'haider ali salhi', '+213794498727', '12', '386', 'en attente', 'test', NULL, '{\"id\":5,\"name\":\"ali\",\"prenom\":\"ali\",\"email\":\"ali@gmail.com\",\"is_editor\":0,\"adress\":\"cem mohamed lamine lamoudi belfort el-harrach\",\"telephone\":\"0551515151\",\"birth\":\"2016-08-28\",\"password_text\":\"aliali\",\"wilaya_id\":5,\"commune_id\":158,\"created_at\":\"2020-07-17 16:07:30\",\"updated_at\":\"2020-07-17 16:07:30\",\"identite\":\"empty\",\"state\":1}', NULL, '2020-09-04 09:29:15', '2020-09-04 09:29:15', 300, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1621,28 +1635,23 @@ CREATE TABLE `livreurs` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `prenom` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_editor` tinyint(1) DEFAULT 0,
   `adress` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `telephone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `birth` date DEFAULT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password_text` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `wilaya_id` int(10) UNSIGNED DEFAULT NULL,
   `commune_id` int(10) UNSIGNED DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `identite` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'empty',
-  `state` tinyint(1) NOT NULL DEFAULT 1
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `livreurs`
 --
 
-INSERT INTO `livreurs` (`id`, `name`, `prenom`, `email`, `is_editor`, `adress`, `telephone`, `birth`, `password`, `password_text`, `wilaya_id`, `commune_id`, `remember_token`, `created_at`, `updated_at`, `identite`, `state`) VALUES
-(6, NULL, 'firstname', 'livreur@livreur.com', 0, 'address', '0551515159', '2021-02-03', '$2y$10$J.21/L.ttivhpqZCsd1WOO36/p69CT42QQnNyUqyuxj4Max/C0.Va', 'test', 1, 4, NULL, '2020-07-18 20:50:19', '2020-07-18 20:50:19', 'empty', 1),
-(5, NULL, 'ali', 'ali@gmail.com', 0, 'cem mohamed lamine lamoudi belfort el-harrach', '0551515151', '2016-08-28', '$2y$10$dPWkbz3rZ2zPPdWChw3pNurTRbbmMGGFBpCfrSMQG2vZcShBd9Ks2', 'aliali', 5, 158, NULL, '2020-07-17 15:07:30', '2020-07-17 15:07:30', 'empty', 1);
+INSERT INTO `livreurs` (`id`, `name`, `prenom`, `email`, `adress`, `telephone`, `wilaya_id`, `commune_id`, `remember_token`, `created_at`, `updated_at`) VALUES
+(6, 'redouane', 'mohamed', 'livreur@livreur.com', 'address', '0551515159', 1, 4, NULL, '2020-07-18 20:50:19', '2020-07-18 20:50:19'),
+(5, 'ali', 'ali', 'ali@gmail.com', 'cem mohamed lamine lamoudi belfort el-harrach', '0551515151', 5, 158, NULL, '2020-07-17 15:07:30', '2020-07-17 15:07:30'),
+(7, NULL, 'haider', 'email@email.com', 'test', '+213794498727', 4, 103, NULL, '2020-09-04 09:36:09', '2020-09-04 09:36:09');
 
 -- --------------------------------------------------------
 
@@ -1654,19 +1663,20 @@ CREATE TABLE `produits` (
   `id` int(10) UNSIGNED NOT NULL,
   `nom` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'empty',
   `categorie` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'empty',
-  `image` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `quantite` int(11) NOT NULL DEFAULT 0,
   `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fournisseur` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prix_fournisseur` int(11) NOT NULL DEFAULT 0,
-  `prix_vente` int(11) NOT NULL DEFAULT 0,
-  `prix_livraison` int(11) NOT NULL DEFAULT 0,
-  `prix_freelance` int(11) DEFAULT NULL,
-  `prix_clicntic` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `budget` int(11) NOT NULL
+  `prix_vente` int(11) DEFAULT NULL,
+  `prix_achat` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `produits`
+--
+
+INSERT INTO `produits` (`id`, `nom`, `categorie`, `quantite`, `description`, `created_at`, `updated_at`, `prix_vente`, `prix_achat`) VALUES
+(8, 'loup garous', 'general', 15, NULL, '2020-09-03 22:27:02', '2020-09-04 09:29:15', 1800, 900);
 
 -- --------------------------------------------------------
 
@@ -1691,20 +1701,7 @@ CREATE TABLE `typelivraison` (
 INSERT INTO `typelivraison` (`id`, `label`, `created_at`, `updated_at`, `temps`, `commission`, `prix`) VALUES
 (1, 'Express 24h', '2020-08-17 09:45:41', '2020-08-17 09:45:41', NULL, NULL, NULL),
 (2, 'livraison à domicile (3jours)', '2020-08-17 09:47:07', '2020-08-17 09:47:07', NULL, NULL, NULL),
-(3, 'Maystro', '2020-08-17 09:48:57', '2020-08-17 09:48:57', NULL, NULL, NULL),
-(5, 'pmplo', '2020-08-17 09:58:26', '2020-08-17 09:58:26', NULL, NULL, NULL),
-(6, 'teststs', '2020-08-17 10:00:28', '2020-08-17 10:00:28', NULL, NULL, NULL),
-(7, 'test', '2020-08-28 09:58:40', '2020-08-28 09:58:40', NULL, NULL, NULL),
-(8, 'lolo', '2020-08-28 09:59:40', '2020-08-28 09:59:40', '300', '100', '3000'),
-(9, 'oooooooo', '2020-08-28 15:51:59', '2020-08-28 15:51:59', '30', '100', '1200'),
-(10, 'test', '2020-08-28 16:07:55', '2020-08-28 16:07:55', '30', '100', '1200'),
-(11, 'dsds', '2020-08-28 16:09:51', '2020-08-28 16:09:51', 'ds', 'sd', 'ds'),
-(12, 'ow', '2020-08-28 16:16:40', '2020-08-28 16:16:40', '80', '08', '808'),
-(13, 'aaaaaaaa', '2020-08-28 16:17:01', '2020-08-28 16:17:01', '20', '100', '20'),
-(14, 'test', '2020-08-28 16:17:49', '2020-08-28 16:17:49', '30', '100', '1200'),
-(15, 'ali', '2020-08-28 16:18:29', '2020-08-28 16:18:29', '30', '100', '1200'),
-(16, 'frfr', '2020-08-28 16:19:05', '2020-08-28 16:19:05', '30', '100', '1200'),
-(17, 'eze', '2020-08-28 16:20:14', '2020-08-28 16:20:14', '30', '100', '1200');
+(3, 'Maystro', '2020-08-17 09:48:57', '2020-08-17 09:48:57', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1730,7 +1727,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nom_prenom`, `telephone`, `grade`, `email`, `password`, `password_text`, `remember_token`, `created_at`, `updated_at`) VALUES
-(5, 'ali ali', '0659439677', 'clikcnTic', 'salhiali197@gmail.com', '$2y$10$Kn7CfblQil5A2mHLxibH2eTPk24XY9Zl29BKAAHQigcNVRKJhL.Tq', 'test', NULL, '2020-07-22 15:59:16', '2020-07-22 15:59:16');
+(5, 'ali ali', '0659439677', 'clikcnTic', 'admin@abshoop.com', '$2y$10$Kn7CfblQil5A2mHLxibH2eTPk24XY9Zl29BKAAHQigcNVRKJhL.Tq', 'test', 'gYB1q9pmORlrvokfs1FxaKVZ8Hr0mo9bkDeMSnz98vOszZgHFMuAI6Y02saF', '2020-07-22 15:59:16', '2020-07-22 15:59:16');
 
 -- --------------------------------------------------------
 
@@ -1860,7 +1857,7 @@ ALTER TABLE `wilayas`
 -- AUTO_INCREMENT pour la table `commandes`
 --
 ALTER TABLE `commandes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT pour la table `communes`
@@ -1872,13 +1869,13 @@ ALTER TABLE `communes`
 -- AUTO_INCREMENT pour la table `livreurs`
 --
 ALTER TABLE `livreurs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `produits`
 --
 ALTER TABLE `produits`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `typelivraison`
